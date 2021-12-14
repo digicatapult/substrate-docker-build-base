@@ -27,6 +27,12 @@ jobs:
       with:
         buildkitd-flags: --debug
         driver-opts: network=${{ job.services.redis.network }}
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build Docker Image
       uses: docker/build-push-action@v2
       with:
@@ -51,4 +57,4 @@ jobs:
           org.opencontainers.image.version=${{ needs.get-version.outputs.version }}
           org.opencontainers.image.created=${{ needs.get-version.outputs.build_date }}
     - name: Publish image
-      run: docker push --all-tags ghcr.io/digicatapult/substrate-docker-build-base:${{ github.sha }}
+      run: docker push --all-tags ghcr.io/digicatapult/substrate-docker-build-base
