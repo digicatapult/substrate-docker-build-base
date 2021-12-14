@@ -51,4 +51,4 @@ jobs:
           org.opencontainers.image.version=${{ needs.get-version.outputs.version }}
           org.opencontainers.image.created=${{ needs.get-version.outputs.build_date }}
     - name: Publish image
-      run: docker push --all-tags ghcr.io/digicatapult/substrate-docker-build-base
+      run: docker push --all-tags ghcr.io/digicatapult/substrate-docker-build-base:${{ github.sha }}
