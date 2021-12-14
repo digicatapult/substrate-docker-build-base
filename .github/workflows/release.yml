@@ -36,7 +36,7 @@ jobs:
     - name: Build Docker Image
       uses: docker/build-push-action@v2
       with:
-        push: false
+        push: true
         builder: ${{ steps.buildx.outputs.name }}
         build-args: |
           RUST_TOOLCHAIN=nightly-2021-11-09
@@ -56,9 +56,4 @@ jobs:
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.version=${{ needs.get-version.outputs.version }}
           org.opencontainers.image.created=${{ needs.get-version.outputs.build_date }}
-    - name: Publish image
-      run: |
-        docker push ghcr.io/digicatapult/substrate-docker-build-base:${{ github.sha }}
-        docker push ghcr.io/digicatapult/substrate-docker-build-base:latest
-        docker push ghcr.io/digicatapult/substrate-docker-build-base:nightly-2021-11-09-alpine3.14
 
